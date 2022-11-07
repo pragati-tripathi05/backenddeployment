@@ -2,12 +2,6 @@ const express = require("express");
 const TodoModel = require("../models/todo.models");
 const todoRouter = express.Router();
 
-//GET all todos
-todoRouter.get("/", async (req, res) => {
-  const todos = await TodoModel.find();
-  res.send(todos);
-});
-
 // CREATE - ADD/POST
 todoRouter.post("/:userId/add", async (req, res) => {
   const userId = req.params.userId;
@@ -20,6 +14,12 @@ todoRouter.post("/:userId/add", async (req, res) => {
   });
   await newTask.save();
   res.send("Todo added");
+});
+
+//GET all todos
+todoRouter.get("/", async (req, res) => {
+  const todos = await TodoModel.find();
+  res.send(todos);
 });
 
 // READ - GET
@@ -39,7 +39,7 @@ todoRouter.patch("/:userId/update/:todoId", async (req, res) => {
     return res.send("Incorrect");
   } else {
     const newTodo = await TodoModel.findByIdAndUpdate(todoId, req.body);
-    req.send("Updated");
+    res.send("Updated");
   }
 });
 
@@ -54,7 +54,7 @@ todoRouter.delete("/:userId/delete/:todoId", async (req, res) => {
   } else {
     const newTodo = await TodoModel.findByIdAndDelete(todoId);
     console.log(newTodo);
-    req.send("Deleted");
+    res.send("Deleted");
   }
 });
 
