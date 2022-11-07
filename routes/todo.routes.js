@@ -43,4 +43,19 @@ todoRouter.patch("/:userId/update/:todoId", async (req, res) => {
   }
 });
 
+// DELETE
+todoRouter.delete("/:userId/delete/:todoId", async (req, res) => {
+  const userId = req.params.userId;
+  const todoId = req.params.todoId;
+  const todo = await TodoModel.findOne({ _id: todoId });
+
+  if (todo.userId !== userId) {
+    return res.send("Incorrect");
+  } else {
+    const newTodo = await TodoModel.findByIdAndDelete(todoId);
+    console.log(newTodo);
+    req.send("Deleted");
+  }
+});
+
 module.exports = todoRouter;

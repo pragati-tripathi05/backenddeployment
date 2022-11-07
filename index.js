@@ -7,7 +7,7 @@ const connection = require("./config/db");
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 const UserModel = require("./models/user.models");
