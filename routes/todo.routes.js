@@ -2,6 +2,12 @@ const express = require("express");
 const TodoModel = require("../models/todo.models");
 const todoRouter = express.Router();
 
+//GET all todos
+todoRouter.get("/", async (req, res) => {
+  const todos = await TodoModel.find();
+  res.send(todos);
+});
+
 // CREATE - ADD/POST
 todoRouter.post("/:userId/add", async (req, res) => {
   const userId = req.params.userId;
